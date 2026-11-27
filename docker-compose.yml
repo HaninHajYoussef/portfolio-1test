@@ -1,6 +1,6 @@
 services:
   portfolio:
-    image: haninhajyoussef/portfolio-nextjs:${TAG:-v1}
+    image: haninhajyoussef/portfolio-nextjs:latest
     container_name: portfolio-nextjs
     ports:
       - "3002:3000"
