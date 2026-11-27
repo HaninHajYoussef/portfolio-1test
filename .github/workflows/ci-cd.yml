@@ -29,3 +29,22 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-nextjs:${{ env.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-nextjs:latest
+
+            
+  deploy:
+    needs: build-and-push
+    runs-on: self-hosted
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Déployer avec Docker Compose
+        run: |
+          docker compose pull
+          docker compose up -d
+          docker compose ps
+
+      - name: Vérifier la santé
+        run: |
+          sleep 10
+          curl -f http://localhost:3002/api/health
